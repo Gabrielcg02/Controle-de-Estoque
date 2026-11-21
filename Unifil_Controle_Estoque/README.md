@@ -78,5 +78,4 @@ O diretório `docs/` contém:
 - `Documentacao_Estoque_Simples.docx`: versão editável.
 - `documentacao_projeto.md`: fonte em Markdown.
 - `diagramas/`: arquivos `.dot` e imagens dos diagramas de caso de uso, DER, atividade, classes e cinco diagramas de sequência.
-
-Antes de enviar o PDF ao tutor, substitua os campos entre colchetes na capa e personalize a conclusão para descrever o que você aprendeu. Confira também o sumário depois das alterações.
+  
