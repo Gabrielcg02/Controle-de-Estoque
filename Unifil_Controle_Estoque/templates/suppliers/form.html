@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}{{ page_title }}{% endblock %}
+{% block page_heading %}{{ page_title }}{% endblock %}
+{% block content %}
+<div class="form-card"><p class="muted">Informe os dados de contato disponíveis. Somente o nome é obrigatório.</p>
+<form method="post" class="form-grid">
+  <div class="field full-width"><label for="name">Nome / Razão social *</label><input id="name" name="name" maxlength="120" required value="{{ supplier.name if supplier else '' }}"></div>
+  <div class="field"><label for="document">CPF / CNPJ</label><input id="document" name="document" value="{{ supplier.document if supplier else '' }}" placeholder="Documento (opcional)"></div>
+  <div class="field"><label for="phone">Telefone</label><input id="phone" name="phone" value="{{ supplier.phone if supplier else '' }}" placeholder="(00) 00000-0000"></div>
+  <div class="field full-width"><label for="email">E-mail</label><input id="email" name="email" type="email" value="{{ supplier.email if supplier else '' }}" placeholder="contato@empresa.com"></div>
+  <div class="form-actions full-width"><a class="button ghost" href="{{ url_for('suppliers_list') }}">Cancelar</a><button class="button primary" type="submit">Salvar fornecedor</button></div>
+</form></div>
+{% endblock %}

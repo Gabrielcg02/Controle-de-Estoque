@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}Fornecedores{% endblock %}
+{% block page_heading %}Fornecedores{% endblock %}
+{% block content %}
+<div class="section-toolbar"><div><p class="lead">Mantenha os contatos dos parceiros de fornecimento.</p><p class="muted">Um fornecedor pode estar associado a diversos produtos.</p></div><a class="button primary" href="{{ url_for('supplier_new') }}">＋ Novo fornecedor</a></div>
+<div class="table-card">{% if suppliers %}<div class="table-scroll"><table><thead><tr><th>Fornecedor</th><th>Documento</th><th>Telefone</th><th>E-mail</th><th>Produtos associados</th><th>Ações</th></tr></thead><tbody>
+{% for s in suppliers %}<tr><td><strong>{{ s.name }}</strong><small class="table-sub">Cadastro #{{ s.id }}</small></td><td>{{ s.document or '—' }}</td><td>{{ s.phone or '—' }}</td><td>{{ s.email or '—' }}</td><td>{{ s.product_count }}</td><td><div class="actions"><a class="small-action" href="{{ url_for('supplier_edit', supplier_id=s.id) }}">Editar</a><form method="post" action="{{ url_for('supplier_delete', supplier_id=s.id) }}" onsubmit="return confirm('Excluir este fornecedor? Fornecedores associados a produtos não podem ser excluídos.');"><button class="small-action danger-link" type="submit">Excluir</button></form></div></td></tr>{% endfor %}
+</tbody></table></div>{% else %}<div class="empty-state"><div class="empty-icon">♙</div><h3>Nenhum fornecedor cadastrado</h3><p>Adicione fornecedores para relacioná-los aos produtos.</p><a class="button primary" href="{{ url_for('supplier_new') }}">＋ Novo fornecedor</a></div>{% endif %}</div>
+{% endblock %}

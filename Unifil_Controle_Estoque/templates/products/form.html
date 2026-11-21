@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}{{ page_title }}{% endblock %}
+{% block page_heading %}{{ page_title }}{% endblock %}
+{% block content %}
+<div class="form-card"><p class="muted">Os campos marcados com * são obrigatórios. O saldo inicial deve ser lançado como uma movimentação de entrada.</p>
+<form method="post" class="form-grid">
+  <div class="field"><label for="sku">SKU / Código *</label><input id="sku" name="sku" maxlength="40" required value="{{ product.sku if product else '' }}" placeholder="Ex.: MAT-001"></div>
+  <div class="field"><label for="name">Nome do produto *</label><input id="name" name="name" maxlength="120" required value="{{ product.name if product else '' }}" placeholder="Ex.: Parafuso M8"></div>
+  <div class="field"><label for="category">Categoria</label><input id="category" name="category" value="{{ product.category if product else '' }}" placeholder="Ex.: Fixadores"></div>
+  <div class="field"><label for="unit">Unidade de medida</label><select id="unit" name="unit">{% for u in ['un','kg','g','L','m','m²','cx','pct'] %}<option value="{{ u }}" {% if product and product.unit == u %}selected{% elif not product and u == 'un' %}selected{% endif %}>{{ u }}</option>{% endfor %}</select></div>
+  <div class="field"><label for="min_stock">Estoque mínimo</label><input id="min_stock" name="min_stock" type="number" min="0" step="0.001" value="{{ product.min_stock if product else '0' }}"></div>
+  <div class="field"><label for="supplier_id">Fornecedor preferencial</label><select id="supplier_id" name="supplier_id"><option value="">Não definido</option>{% for s in suppliers %}<option value="{{ s.id }}" {% if product and product.supplier_id|string == s.id|string %}selected{% endif %}>{{ s.name }}</option>{% endfor %}</select></div>
+  <div class="field full-width"><label for="description">Descrição</label><textarea id="description" name="description" rows="3" placeholder="Informações adicionais sobre o produto">{{ product.description if product else '' }}</textarea></div>
+  <div class="form-actions full-width"><a class="button ghost" href="{{ url_for('products_list') }}">Cancelar</a><button class="button primary" type="submit">Salvar produto</button></div>
+</form></div>
+{% endblock %}

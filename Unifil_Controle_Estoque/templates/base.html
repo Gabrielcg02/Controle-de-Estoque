@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Estoque Simples{% endblock %} | Estoque Simples</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="{{ url_for('dashboard') }}"><span class="brand-mark">ES</span><span>Estoque Simples<small>Controle de materiais</small></span></a>
+    <nav aria-label="Navegação principal">
+      <a class="nav-link {% if request.endpoint == 'dashboard' %}active{% endif %}" href="{{ url_for('dashboard') }}">▦ <span>Painel</span></a>
+      <a class="nav-link {% if request.endpoint and request.endpoint.startswith('products_') %}active{% endif %}" href="{{ url_for('products_list') }}">▤ <span>Produtos</span></a>
+      <a class="nav-link {% if request.endpoint and request.endpoint.startswith('suppliers_') %}active{% endif %}" href="{{ url_for('suppliers_list') }}">♙ <span>Fornecedores</span></a>
+      <a class="nav-link {% if request.endpoint and request.endpoint.startswith('movement') %}active{% endif %}" href="{{ url_for('movements_list') }}">⇄ <span>Movimentações</span></a>
+    </nav>
+    <div class="sidebar-footer">Projeto acadêmico · 2026</div>
+  </aside>
+  <main class="main-content">
+    <header class="topbar"><div><span class="eyebrow">GESTÃO DE ESTOQUE</span><h1>{% block page_heading %}Painel{% endblock %}</h1></div><a class="button primary" href="{{ url_for('movement_new') }}">＋ Nova movimentação</a></header>
+    <section class="content">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}<div class="flash-stack">{% for category, message in messages %}<div class="flash {{ category }}" role="status">{{ message }}</div>{% endfor %}</div>{% endif %}
+      {% endwith %}
+      {% block content %}{% endblock %}
+    </section>
+    <footer class="main-footer">Estoque Simples <span>·</span> Aplicação demonstrativa para fins acadêmicos</footer>
+  </main>
+</body>
+</html>

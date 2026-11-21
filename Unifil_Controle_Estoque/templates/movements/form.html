@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Nova movimentação{% endblock %}
+{% block page_heading %}Nova movimentação{% endblock %}
+{% block content %}
+<div class="form-card"><p class="muted">Registre entradas ou saídas. O sistema impede saídas maiores que o saldo disponível.</p>
+{% if products %}<form method="post" class="form-grid">
+  <div class="field full-width"><label for="product_id">Produto *</label><select id="product_id" name="product_id" required><option value="">Selecione um produto</option>{% for p in products %}<option value="{{ p.id }}" {% if values and values.product_id|string == p.id|string %}selected{% endif %}>{{ p.sku }} — {{ p.name }} (saldo: {{ p.stock|qty }} {{ p.unit }})</option>{% endfor %}</select></div>
+  <div class="field"><label for="movement_type">Tipo *</label><select id="movement_type" name="movement_type" required><option value="ENTRADA" {% if not values or values.movement_type == 'ENTRADA' %}selected{% endif %}>Entrada</option><option value="SAIDA" {% if values and values.movement_type == 'SAIDA' %}selected{% endif %}>Saída</option></select></div>
+  <div class="field"><label for="quantity">Quantidade *</label><input id="quantity" name="quantity" type="number" min="0.001" step="0.001" required value="{{ values.quantity if values else '' }}" placeholder="Ex.: 10"></div>
+  <div class="field full-width"><label for="note">Observação</label><textarea id="note" name="note" rows="3" maxlength="240" placeholder="Ex.: compra, ordem de produção, ajuste autorizado">{{ values.note if values else '' }}</textarea></div>
+  <div class="full-width info-note">O histórico de movimentações é preservado para manter a rastreabilidade. Para corrigir um lançamento, registre uma movimentação compensatória com observação.</div>
+  <div class="form-actions full-width"><a class="button ghost" href="{{ url_for('movements_list') }}">Cancelar</a><button class="button primary" type="submit">Registrar movimentação</button></div>
+</form>{% else %}<div class="empty-state"><h3>Cadastre um produto primeiro</h3><p>É necessário ter ao menos um produto para registrar movimentações.</p><a class="button primary" href="{{ url_for('product_new') }}">Cadastrar produto</a></div>{% endif %}
+</div>
+{% endblock %}
